@@ -21,7 +21,9 @@ export default function ProcurementDashboard() {
   const [suppliers, setSuppliers] = useState([])
 
   useEffect(() => {
-    fetch("http://localhost:8000/suppliers")
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+    fetch(`${apiUrl}/suppliers`)
       .then((res) => res.json())
       .then((data) => setSuppliers(data))
       .catch((err) => console.error(err))
