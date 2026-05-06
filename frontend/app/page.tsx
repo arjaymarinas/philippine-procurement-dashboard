@@ -1,18 +1,12 @@
+"use client"
+
 import { DashboardHeader } from "@/components/dashboard/header"
-import { StatCard } from "@/components/dashboard/stat-card"
+import { StatsGrid } from "@/components/dashboard/stats-grid"
 import { ActivityChart } from "@/components/dashboard/activity-chart"
 import { ContractValueChart } from "@/components/dashboard/contract-value-chart"
 import { CategoryBreakdown } from "@/components/dashboard/category-breakdown"
 import { RecentActivities } from "@/components/dashboard/recent-activities"
 import { VendorPerformance } from "@/components/dashboard/vendor-performance"
-import {
-  FileText,
-  DollarSign,
-  Users,
-  TrendingUp,
-  Clock,
-  Award,
-} from "lucide-react"
 
 export default function ProcurementDashboard() {
   return (
@@ -20,56 +14,8 @@ export default function ProcurementDashboard() {
       <DashboardHeader />
       
       <main className="container mx-auto px-4 py-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
-          <StatCard
-            title="Total Bids"
-            value={927}
-            change={10.2}
-            changeLabel="vs last year"
-            icon={<FileText className="h-4 w-4" />}
-          />
-          <StatCard
-            title="Contract Value"
-            value="53.3"
-            prefix="$"
-            suffix="M"
-            change={14.5}
-            changeLabel="vs last year"
-            icon={<DollarSign className="h-4 w-4" />}
-          />
-          <StatCard
-            title="Active Vendors"
-            value={248}
-            change={8.3}
-            changeLabel="vs last year"
-            icon={<Users className="h-4 w-4" />}
-          />
-          <StatCard
-            title="Avg Bid Value"
-            value="57.5"
-            prefix="$"
-            suffix="K"
-            change={6.1}
-            changeLabel="vs last year"
-            icon={<TrendingUp className="h-4 w-4" />}
-          />
-          <StatCard
-            title="Avg Cycle Time"
-            value="18.5"
-            suffix=" days"
-            change={-12.4}
-            changeLabel="vs last year"
-            icon={<Clock className="h-4 w-4" />}
-          />
-          <StatCard
-            title="Awards Made"
-            value={685}
-            change={9.8}
-            changeLabel="vs last year"
-            icon={<Award className="h-4 w-4" />}
-          />
-        </div>
+        {/* Stats Grid - Fetches data from backend */}
+        <StatsGrid />
 
         {/* Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">

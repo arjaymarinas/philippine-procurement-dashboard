@@ -15,8 +15,12 @@
     "install:all": "npm install"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "cors": "^2.8.6",
     "csv-parse": "^6.2.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "lucide-react": "^1.14.0",
+    "next": "^16.2.4",
+    "swr": "^2.4.1"
   }
 }

@@ -9,3 +9,18 @@ id,title,vendor_name,contract_value,award_date,category,status
 8,Network Equipment,NetConnect Hardware,520000,2024-04-12,IT Equipment,In Progress
 9,HVAC System Replacement,CoolAir Engineering,680000,2024-01-30,Facilities,Completed
 10,Consulting Services,StrategyFirst Consulting,150000,2024-05-01,Professional Services,Active
+11,Data Center Expansion,TechSolutions Corp,2800000,2024-05-15,IT Equipment,Completed
+12,Road Repair Project,BuildRight Construction,1200000,2024-06-01,Construction,Active
+13,Laboratory Equipment,HealthFirst Supplies,890000,2024-06-20,Medical,Completed
+14,Electric Vehicle Fleet,AutoFleet Inc,1500000,2024-07-05,Transportation,In Progress
+15,Cloud Migration Services,CloudTech Solutions,950000,2024-07-18,IT Services,Active
+16,Access Control System,SecureGuard Systems,340000,2024-08-02,Security,Completed
+17,Ergonomic Workstations,OfficeSpace Furnishings,220000,2024-08-15,Office Supplies,Active
+18,Fiber Optic Installation,NetConnect Hardware,780000,2024-09-01,IT Equipment,Completed
+19,Building Automation System,CoolAir Engineering,1100000,2024-09-20,Facilities,In Progress
+20,Financial Audit Services,StrategyFirst Consulting,85000,2024-10-05,Professional Services,Active
+21,Cybersecurity Assessment,TechSolutions Corp,420000,2024-10-18,IT Services,Completed
+22,Parking Structure Expansion,BuildRight Construction,2100000,2024-11-01,Construction,Pending
+23,Pharmaceutical Supplies,HealthFirst Supplies,650000,2024-11-15,Medical,Active
+24,Maintenance Vehicle Purchase,AutoFleet Inc,380000,2024-11-28,Transportation,Completed
+25,ERP System Implementation,CloudTech Solutions,1800000,2024-12-10,IT Services,In Progress
