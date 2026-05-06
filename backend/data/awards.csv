@@ -1,0 +1,11 @@
+id,title,vendor_name,contract_value,award_date,category,status
+1,IT Infrastructure Upgrade,TechSolutions Corp,1250000,2024-01-15,IT Equipment,Completed
+2,Office Building Renovation,BuildRight Construction,3500000,2024-02-20,Construction,In Progress
+3,Medical Supplies Procurement,HealthFirst Supplies,450000,2024-03-10,Medical,Completed
+4,Fleet Vehicle Purchase,AutoFleet Inc,890000,2024-01-25,Transportation,Completed
+5,Software Licensing Agreement,CloudTech Solutions,320000,2024-04-05,IT Services,Active
+6,Security System Installation,SecureGuard Systems,275000,2024-02-28,Security,Completed
+7,Furniture and Fixtures,OfficeSpace Furnishings,180000,2024-03-15,Office Supplies,Completed
+8,Network Equipment,NetConnect Hardware,520000,2024-04-12,IT Equipment,In Progress
+9,HVAC System Replacement,CoolAir Engineering,680000,2024-01-30,Facilities,Completed
+10,Consulting Services,StrategyFirst Consulting,150000,2024-05-01,Professional Services,Active
