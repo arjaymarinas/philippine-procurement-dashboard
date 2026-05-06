@@ -5,7 +5,7 @@ def add_cors(app):
         CORSMiddleware,
         allow_origins=[
             "http://localhost:3000",
-            "https://v0-phil-proc-dashboard.vercel.app/"
+            "https://v0-phil-proc-dashboard.vercel.app"
         ],
         allow_credentials=True,
         allow_methods=["*"],
