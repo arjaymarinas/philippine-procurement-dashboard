@@ -40,13 +40,12 @@ export function StatCard({
           {change !== undefined && (
             <div className="flex items-center gap-2">
               <span
-                className={`flex items-center gap-1 text-sm font-medium ${
-                  isPositive
+                className={`flex items-center gap-1 text-sm font-medium ${isPositive
                     ? "text-accent"
                     : isNegative
-                    ? "text-destructive"
-                    : "text-muted-foreground"
-                }`}
+                      ? "text-destructive"
+                      : "text-muted-foreground"
+                  }`}
               >
                 {isPositive ? (
                   <TrendingUp className="h-4 w-4" />

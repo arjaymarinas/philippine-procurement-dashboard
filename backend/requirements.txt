@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+
+# Database driver (PostgreSQL)
+psycopg2-binary
+
+# Environment variables
+python-dotenv
+
+# Data handling (useful for analytics / CSV / processing)
+pandas
+
+# Optional but useful for validation / schemas
+pydantic
