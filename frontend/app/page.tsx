@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { DashboardHeader } from "@/components/dashboard/header"
 import { StatCard } from "@/components/dashboard/stat-card"
 import { ActivityChart } from "@/components/dashboard/activity-chart"
@@ -15,10 +18,19 @@ import {
 } from "lucide-react"
 
 export default function ProcurementDashboard() {
+  const [suppliers, setSuppliers] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:8000/suppliers")
+      .then((res) => res.json())
+      .then((data) => setSuppliers(data))
+      .catch((err) => console.error(err))
+  }, [])
+
   return (
     <div className="min-h-screen bg-background">
       <DashboardHeader />
-      
+
       <main className="container mx-auto px-4 py-8">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
@@ -32,7 +44,7 @@ export default function ProcurementDashboard() {
           <StatCard
             title="Contract Value"
             value="53.3"
-            prefix="$"
+            prefix="₱"
             suffix="M"
             change={14.5}
             changeLabel="vs last year"
@@ -40,7 +52,7 @@ export default function ProcurementDashboard() {
           />
           <StatCard
             title="Active Vendors"
-            value={248}
+            value={suppliers.length}
             change={8.3}
             changeLabel="vs last year"
             icon={<Users className="h-4 w-4" />}
@@ -48,7 +60,7 @@ export default function ProcurementDashboard() {
           <StatCard
             title="Avg Bid Value"
             value="57.5"
-            prefix="$"
+            prefix="₱"
             suffix="K"
             change={6.1}
             changeLabel="vs last year"
