@@ -4,8 +4,36 @@
 #ORDER BY "Name" ASC;    
 #"""
 
-GET_SUPPLIERS_QUERY = """
-SELECT *
-FROM public."Merchants"
-ORDER BY "Name" ASC;    
+GET_TOTAL_BIDS_ABC = """
+WITH bids_clean AS (
+    SELECT
+        "BidReferenceNo",
+        MAX("ABC") AS ABC
+    FROM public."bids"
+    WHERE "PublishedDate" IS NOT NULL
+    GROUP BY "BidReferenceNo"
+)
+SELECT
+    COUNT(*) AS "Bids Posted",
+    SUM(ABC) AS "Total ABC"
+FROM bids_clean; 
+"""
+
+GET_TOTAL_AWARD_CA = """
+SELECT 
+    COUNT(DISTINCT "AwardNo") "Awards Posted",
+    SUM("ContractAmount") "Total Contract"
+FROM public."bids"
+WHERE "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted');
+"""
+
+GET_TOTAL_ACTIVE_MERCHANT = """
+SELECT COUNT(*) AS total_merchants
+FROM merchants;
+"""
+
+GET_TOTAL_PLATINUM_MERCHANT = """
+SELECT COUNT(*) AS platinum_merchants
+FROM merchants
+WHERE "Membership Type" = 'Platinum';
 """

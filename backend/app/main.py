@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.core.cors import add_cors
-from app.api.suppliers import router as suppliers_router
+from app.api.dashboard import router as dashboard_router
 
 app = FastAPI(title="Procurement Insights API")
 
@@ -8,4 +8,4 @@ app = FastAPI(title="Procurement Insights API")
 add_cors(app)
 
 # register routes
-app.include_router(suppliers_router, prefix="/suppliers", tags=["Suppliers"])
+app.include_router(dashboard_router, prefix="/dashboard", tags=["Dashboard"])
