@@ -19,12 +19,36 @@ SELECT
 FROM bids_clean; 
 """
 
+GET_BIDS_PER_MONTH = """
+SELECT
+    TO_CHAR("PublishedDate"::date, 'Mon') AS month,
+    COUNT(DISTINCT "BidReferenceNo") AS total
+FROM bids
+WHERE "PublishedDate" IS NOT NULL
+GROUP BY DATE_TRUNC('month', "PublishedDate"::date),
+         TO_CHAR("PublishedDate"::date, 'Mon')
+ORDER BY DATE_TRUNC('month', "PublishedDate"::date);
+"""
+
 GET_TOTAL_AWARD_CA = """
 SELECT 
     COUNT(DISTINCT "AwardNo") "Awards Posted",
     SUM("ContractAmount") "Total Contract"
-FROM public."bids"
-WHERE "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted');
+FROM public."bids" 
+WHERE "AwardNo" IS NOT NULL AND "PublishedDate" IS NOT NULL 
+AND "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted');
+"""
+
+GET_AWARDS_PER_MONTH = """
+SELECT
+    TO_CHAR("PublishedDate"::date, 'Mon') AS month,
+    COUNT(DISTINCT "AwardNo") AS total
+FROM bids
+WHERE "AwardNo" IS NOT NULL AND "PublishedDate" IS NOT NULL 
+AND "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted')
+GROUP BY DATE_TRUNC('month', "PublishedDate"::date),
+         TO_CHAR("PublishedDate"::date, 'Mon')
+ORDER BY DATE_TRUNC('month', "PublishedDate"::date);
 """
 
 GET_TOTAL_ACTIVE_MERCHANT = """

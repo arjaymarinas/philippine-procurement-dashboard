@@ -12,22 +12,23 @@ import {
 } from "recharts"
 import { ChevronRight } from "lucide-react"
 
-const data = [
-  { month: "Jan", bids: 45, contracts: 32 },
-  { month: "Feb", bids: 52, contracts: 38 },
-  { month: "Mar", bids: 61, contracts: 45 },
-  { month: "Apr", bids: 58, contracts: 42 },
-  { month: "May", bids: 72, contracts: 55 },
-  { month: "Jun", bids: 68, contracts: 51 },
-  { month: "Jul", bids: 85, contracts: 62 },
-  { month: "Aug", bids: 91, contracts: 68 },
-  { month: "Sep", bids: 88, contracts: 65 },
-  { month: "Oct", bids: 95, contracts: 72 },
-  { month: "Nov", bids: 102, contracts: 78 },
-  { month: "Dec", bids: 110, contracts: 85 },
-]
 
-export function ActivityChart() {
+export function ActivityChart({ bids_per_month, awards_per_month }: { bids_per_month: any, awards_per_month: any }) {
+  const chartData = bids_per_month?.map((item: any) => {
+    const month = item[0]
+    const bids = item[1]
+    const awardItem = awards_per_month?.find((a: any) => a[0] === month)
+    const award = awardItem ? awardItem[1] : 0
+
+    return {
+      month,
+      bids_posted: bids,
+      award_posted: award
+    }
+  }) || []
+
+  const numberFormatter = new Intl.NumberFormat("en-US")
+
   return (
     <Card className="p-6 bg-card border-border">
       <div className="flex items-center justify-between mb-6">
@@ -51,7 +52,7 @@ export function ActivityChart() {
       </div>
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+          <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="colorBids" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="oklch(0.7 0.15 200)" stopOpacity={0.3} />
@@ -73,6 +74,7 @@ export function ActivityChart() {
               axisLine={false}
               tickLine={false}
               tick={{ fill: "oklch(0.6 0 0)", fontSize: 12 }}
+              tickFormatter={(value) => numberFormatter.format(value)}
             />
             <Tooltip
               contentStyle={{
@@ -81,10 +83,12 @@ export function ActivityChart() {
                 borderRadius: "8px",
                 color: "oklch(0.95 0 0)",
               }}
+              formatter={(value: number) => [numberFormatter.format(value)]}
             />
             <Area
               type="monotone"
-              dataKey="bids"
+              dataKey="bids_posted"
+              name="Bids Posted"
               stroke="oklch(0.7 0.15 200)"
               strokeWidth={2}
               fillOpacity={1}
@@ -92,7 +96,8 @@ export function ActivityChart() {
             />
             <Area
               type="monotone"
-              dataKey="contracts"
+              dataKey="award_posted"
+              name="Contracts Awarded"
               stroke="oklch(0.75 0.18 145)"
               strokeWidth={2}
               fillOpacity={1}

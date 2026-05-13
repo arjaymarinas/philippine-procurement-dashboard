@@ -8,6 +8,7 @@ import { ContractValueChart } from "@/components/dashboard/contract-value-chart"
 import { CategoryBreakdown } from "@/components/dashboard/category-breakdown"
 import { RecentActivities } from "@/components/dashboard/recent-activities"
 import { VendorPerformance } from "@/components/dashboard/vendor-performance"
+import { ProcurementPieChart } from "@/components/dashboard/pie-chart"
 import {
   FileText,
   DollarSign,
@@ -101,14 +102,21 @@ export default function ProcurementDashboard() {
             title="Platinum Merchants"
             value={formatter.format(stats?.merchants?.total_platinum_merchant ?? 0)}
             change={200}
-            changeLabel="Red Merchants"
+            changeLabel="vs last year"
             icon={<Award className="h-4 w-4" />}
           />
         </div>
 
+        {/* Pie Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <ProcurementPieChart />
+          <div className="lg:col-span-2">
+            <ActivityChart bids_per_month={stats?.bids_per_month} awards_per_month={stats?.awards_per_month} />
+          </div>
+        </div>
+
         {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <ActivityChart />
+        <div className="mb-8">
           <ContractValueChart />
         </div>
 

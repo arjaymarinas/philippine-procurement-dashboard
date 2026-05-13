@@ -19,7 +19,7 @@ export function Navigation() {
   return (
     <nav className="border-b border-border bg-card/30">
       <div className="container mx-auto px-4">
-        <div className="flex items-center gap-1 overflow-x-auto">
+        <div className="flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href
             return (

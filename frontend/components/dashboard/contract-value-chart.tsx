@@ -13,18 +13,18 @@ import {
 import { ChevronRight } from "lucide-react"
 
 const data = [
-  { month: "Jan", value: 2.4 },
-  { month: "Feb", value: 3.1 },
-  { month: "Mar", value: 2.8 },
-  { month: "Apr", value: 3.5 },
-  { month: "May", value: 4.2 },
-  { month: "Jun", value: 3.9 },
-  { month: "Jul", value: 4.8 },
-  { month: "Aug", value: 5.2 },
-  { month: "Sep", value: 4.6 },
-  { month: "Oct", value: 5.8 },
-  { month: "Nov", value: 6.1 },
-  { month: "Dec", value: 6.9 },
+  { month: "Jan", abc: 2.4, ca: 1.1 },
+  { month: "Feb", abc: 3.1, ca: 1.5 },
+  { month: "Mar", abc: 2.8, ca: 1.3 },
+  { month: "Apr", abc: 3.5, ca: 1.8 },
+  { month: "May", abc: 4.2, ca: 2.1 },
+  { month: "Jun", abc: 3.9, ca: 1.9 },
+  { month: "Jul", abc: 4.8, ca: 2.5 },
+  { month: "Aug", abc: 5.2, ca: 2.8 },
+  { month: "Sep", abc: 4.6, ca: 2.3 },
+  { month: "Oct", abc: 5.8, ca: 3.1 },
+  { month: "Nov", abc: 6.1, ca: 3.3 },
+  { month: "Dec", abc: 6.9, ca: 3.8 },
 ]
 
 export function ContractValueChart() {
@@ -54,7 +54,7 @@ export function ContractValueChart() {
               axisLine={false}
               tickLine={false}
               tick={{ fill: "oklch(0.6 0 0)", fontSize: 12 }}
-              tickFormatter={(value) => `$${value}M`}
+              tickFormatter={(value) => `₱${value}M`}
             />
             <Tooltip
               contentStyle={{
@@ -63,11 +63,16 @@ export function ContractValueChart() {
                 borderRadius: "8px",
                 color: "oklch(0.95 0 0)",
               }}
-              formatter={(value: number) => [`$${value}M`, "Contract Value"]}
+              formatter={(value: number) => [`₱${value}M`, "Contract Value"]}
             />
             <Bar
-              dataKey="value"
+              dataKey="abc"
               fill="oklch(0.7 0.15 200)"
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              dataKey="ca"
+              fill="oklch(0.75 0.18 145)"
               radius={[4, 4, 0, 0]}
             />
           </BarChart>
