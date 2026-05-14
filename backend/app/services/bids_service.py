@@ -1,5 +1,11 @@
 from app.db.connection import get_connection
-from app.db.queries import GET_TOTAL_BIDS_ABC, GET_TOTAL_AWARD_CA, GET_BIDS_PER_MONTH, GET_AWARDS_PER_MONTH
+from app.db.queries import (
+  GET_TOTAL_BIDS_ABC,
+  GET_TOTAL_AWARD_CA,
+  GET_BIDS_ABC_PER_MONTH,
+  GET_AWARDS_CA_PER_MONTH,
+  GET_BIDS_ABC_BY_CLASSIFICATION
+)
 
 def get_bid_stats():
     conn = get_connection()
@@ -30,28 +36,39 @@ def get_bid_stats():
       cursor.close()
       conn.close()
 
-def get_bids_per_month():
+def get_bids_abc_per_month():
   conn = get_connection()
   cursor = conn.cursor()
 
   try:
-    cursor.execute(GET_BIDS_PER_MONTH)
+    cursor.execute(GET_BIDS_ABC_PER_MONTH)
     result = cursor.fetchall()
     return result
   finally:
     cursor.close()
     conn.close()
 
-def get_awards_per_month():
+def get_bids_abc_by_classification():
   conn = get_connection()
   cursor = conn.cursor()
 
   try:
-    cursor.execute(GET_AWARDS_PER_MONTH)
+    cursor.execute(GET_BIDS_ABC_BY_CLASSIFICATION)
+    result = cursor.fetchall()
+    return result
+  finally:
+    cursor.close()
+    conn.close()
+
+def get_awards_ca_per_month():
+  conn = get_connection()
+  cursor = conn.cursor()
+
+  try:
+    cursor.execute(GET_AWARDS_CA_PER_MONTH)
     result = cursor.fetchall()
     return result
   finally:
     cursor.close()
     conn.close()
   
-    

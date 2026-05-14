@@ -2,4 +2,4 @@
 uvicorn app.main:app --reload
 
 # run this command to start frontend service
-npm run dev
+pnpm dev

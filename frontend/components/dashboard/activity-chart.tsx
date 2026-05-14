@@ -12,18 +12,23 @@ import {
 } from "recharts"
 import { ChevronRight } from "lucide-react"
 
+interface BidVsAwardChartProps {
+  month: string;
+  bids_posted: number;
+  contracts_awarded: number;
+}
 
-export function ActivityChart({ bids_per_month, awards_per_month }: { bids_per_month: any, awards_per_month: any }) {
-  const chartData = bids_per_month?.map((item: any) => {
+export function ActivityChart({ bids_abc_per_month, awards_ca_per_month }: { bids_abc_per_month: BidVsAwardChartProps[], awards_ca_per_month: BidVsAwardChartProps[] }) {
+  const chartData = bids_abc_per_month?.map((item: any) => {
     const month = item[0]
     const bids = item[1]
-    const awardItem = awards_per_month?.find((a: any) => a[0] === month)
+    const awardItem = awards_ca_per_month?.find((a: any) => a[0] === month)
     const award = awardItem ? awardItem[1] : 0
 
     return {
       month,
-      bids_posted: bids,
-      award_posted: award
+      "Bids Posted": bids,
+      "Contracts Awarded": award
     }
   }) || []
 
@@ -33,7 +38,7 @@ export function ActivityChart({ bids_per_month, awards_per_month }: { bids_per_m
     <Card className="p-6 bg-card border-border">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-lg font-semibold text-foreground">Procurement Activity</h3>
+          <h3 className="text-lg font-semibold text-foreground">Monthly Bids Posted vs Contracts Awarded</h3>
           <div className="flex items-center gap-4 mt-2">
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-primary" />
@@ -83,11 +88,11 @@ export function ActivityChart({ bids_per_month, awards_per_month }: { bids_per_m
                 borderRadius: "8px",
                 color: "oklch(0.95 0 0)",
               }}
-              formatter={(value: number) => [numberFormatter.format(value)]}
+              formatter={(value: number, name: string) => [numberFormatter.format(value), name]}
             />
             <Area
               type="monotone"
-              dataKey="bids_posted"
+              dataKey="Bids Posted"
               name="Bids Posted"
               stroke="oklch(0.7 0.15 200)"
               strokeWidth={2}
@@ -96,7 +101,7 @@ export function ActivityChart({ bids_per_month, awards_per_month }: { bids_per_m
             />
             <Area
               type="monotone"
-              dataKey="award_posted"
+              dataKey="Contracts Awarded"
               name="Contracts Awarded"
               stroke="oklch(0.75 0.18 145)"
               strokeWidth={2}

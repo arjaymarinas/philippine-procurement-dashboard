@@ -9,6 +9,7 @@ import { CategoryBreakdown } from "@/components/dashboard/category-breakdown"
 import { RecentActivities } from "@/components/dashboard/recent-activities"
 import { VendorPerformance } from "@/components/dashboard/vendor-performance"
 import { ProcurementPieChart } from "@/components/dashboard/pie-chart"
+import { BudgetVsActualChart } from "@/components/dashboard/budget-actual-chart"
 import {
   FileText,
   DollarSign,
@@ -20,7 +21,7 @@ import {
 
 export default function ProcurementDashboard() {
 
-  const formatter = new Intl.NumberFormat("en", {
+  const currencyFormatter = new Intl.NumberFormat("en", {
     notation: "compact",
     compactDisplay: "short",
   });
@@ -46,14 +47,14 @@ export default function ProcurementDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
           <StatCard
             title="Bids Posted"
-            value={formatter.format(stats?.bids?.bid_posted ?? 0)}
+            value={currencyFormatter.format(stats?.bids?.bid_posted ?? 0)}
             change={10.2}
             changeLabel="vs last year"
             icon={<FileText className="h-4 w-4" />}
           />
           <StatCard
             title="Total ABC"
-            value={formatter.format(stats?.bids?.total_abc ?? 0)}
+            value={currencyFormatter.format(stats?.bids?.total_abc ?? 0)}
             prefix="₱"
             change={14.5}
             changeLabel="vs last year"
@@ -61,14 +62,14 @@ export default function ProcurementDashboard() {
           />
           <StatCard
             title="Awards Posted"
-            value={formatter.format(stats?.awards?.award_posted ?? 0)}
+            value={currencyFormatter.format(stats?.awards?.award_posted ?? 0)}
             change={10.2}
             changeLabel="vs last year"
             icon={<FileText className="h-4 w-4" />}
           />
           <StatCard
             title="Contract Amount"
-            value={formatter.format(stats?.awards?.total_contract_amount ?? 0)}
+            value={currencyFormatter.format(stats?.awards?.total_contract_amount ?? 0)}
             prefix="₱"
             change={14.5}
             changeLabel="vs last year"
@@ -76,7 +77,7 @@ export default function ProcurementDashboard() {
           />
           <StatCard
             title="Active Merchants"
-            value={formatter.format(stats?.merchants?.total_active_merchant ?? 0)}
+            value={currencyFormatter.format(stats?.merchants?.total_active_merchant ?? 0)}
             change={8.3}
             changeLabel="vs last year"
             icon={<Users className="h-4 w-4" />}
@@ -100,7 +101,7 @@ export default function ProcurementDashboard() {
           />*/}
           <StatCard
             title="Platinum Merchants"
-            value={formatter.format(stats?.merchants?.total_platinum_merchant ?? 0)}
+            value={currencyFormatter.format(stats?.merchants?.total_platinum_merchant ?? 0)}
             change={200}
             changeLabel="vs last year"
             icon={<Award className="h-4 w-4" />}
@@ -109,16 +110,25 @@ export default function ProcurementDashboard() {
 
         {/* Pie Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <ProcurementPieChart />
+          <ProcurementPieChart bids_abc_by_classification={stats?.bids_abc_by_classification} />
           <div className="lg:col-span-2">
-            <ActivityChart bids_per_month={stats?.bids_per_month} awards_per_month={stats?.awards_per_month} />
+            <ActivityChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />
           </div>
         </div>
 
-        {/* Charts Row */}
+        {/* Pie Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <ProcurementPieChart bids_abc_by_classification={stats?.bids_abc_by_classification} />
+          <div className="lg:col-span-2">
+            <BudgetVsActualChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />
+          </div>
+        </div>
+
+        {/* Charts Row 
         <div className="mb-8">
           <ContractValueChart />
         </div>
+        */}
 
         {/* Bottom Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

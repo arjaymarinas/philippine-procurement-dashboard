@@ -19,15 +19,46 @@ SELECT
 FROM bids_clean; 
 """
 
-GET_BIDS_PER_MONTH = """
+GET_BIDS_ABC_PER_MONTH = """
+WITH bids_clean AS (
+    SELECT
+        DATE_TRUNC('month', "PublishedDate"::date) AS month_date,
+        TO_CHAR("PublishedDate"::date, 'Mon') AS month,
+        "BidReferenceNo",
+        MAX("ABC") AS ABC
+    FROM public."bids"
+    WHERE "PublishedDate" IS NOT NULL
+    GROUP BY
+        DATE_TRUNC('month', "PublishedDate"::date),
+        TO_CHAR("PublishedDate"::date, 'Mon'),
+        "BidReferenceNo"
+)
 SELECT
-    TO_CHAR("PublishedDate"::date, 'Mon') AS month,
-    COUNT(DISTINCT "BidReferenceNo") AS total
-FROM bids
-WHERE "PublishedDate" IS NOT NULL
-GROUP BY DATE_TRUNC('month', "PublishedDate"::date),
-         TO_CHAR("PublishedDate"::date, 'Mon')
-ORDER BY DATE_TRUNC('month', "PublishedDate"::date);
+    month AS "Month",
+    COUNT(*) AS "Bids Posted",
+    SUM(ABC) AS "Total ABC"
+FROM bids_clean
+GROUP BY month_date, month
+ORDER BY month_date;
+"""
+
+GET_BIDS_ABC_BY_CLASSIFICATION = """
+WITH bids_clean AS (
+    SELECT
+        "BidReferenceNo",
+        "Classification",
+        MAX("ABC") AS ABC
+    FROM public."bids"
+    WHERE "PublishedDate" IS NOT NULL
+    GROUP BY "BidReferenceNo", "Classification"
+)
+SELECT
+    "Classification",
+    COUNT(*) AS "Bids Posted",
+    SUM(ABC) AS "Total ABC"
+FROM bids_clean
+GROUP BY "Classification"
+ORDER BY "Classification" ASC;
 """
 
 GET_TOTAL_AWARD_CA = """
@@ -39,16 +70,18 @@ WHERE "AwardNo" IS NOT NULL AND "PublishedDate" IS NOT NULL
 AND "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted');
 """
 
-GET_AWARDS_PER_MONTH = """
+GET_AWARDS_CA_PER_MONTH = """
 SELECT
     TO_CHAR("PublishedDate"::date, 'Mon') AS month,
-    COUNT(DISTINCT "AwardNo") AS total
+    COUNT(DISTINCT "AwardNo") AS TotalAward,
+	SUM("ContractAmount") AS TotalContractAmount
 FROM bids
 WHERE "AwardNo" IS NOT NULL AND "PublishedDate" IS NOT NULL 
 AND "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted')
 GROUP BY DATE_TRUNC('month', "PublishedDate"::date),
          TO_CHAR("PublishedDate"::date, 'Mon')
 ORDER BY DATE_TRUNC('month', "PublishedDate"::date);
+
 """
 
 GET_TOTAL_ACTIVE_MERCHANT = """
