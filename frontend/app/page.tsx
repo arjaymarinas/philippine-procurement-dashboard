@@ -11,6 +11,8 @@ import { VendorPerformance } from "@/components/dashboard/vendor-performance"
 import { ProcurementPieChart } from "@/components/dashboard/pie-chart"
 import { BudgetVsActualChart } from "@/components/dashboard/budget-actual-chart"
 import { BidsVsAwardsChart } from "@/components/charts/bids-vs-award-chart"
+import { RedPlatinumChart } from "@/components/charts/red-platinum-chart"
+
 import {
   FileText,
   DollarSign,
@@ -111,7 +113,8 @@ export default function ProcurementDashboard() {
 
         {/* Pie Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <ProcurementPieChart bids_abc_by_classification={stats?.bids_abc_by_classification} />
+          {/*<ProcurementPieChart bids_abc_by_classification={stats?.bids_abc_by_classification} />*/}
+          <RedPlatinumChart merchants={stats?.merchants} />
           <div className="lg:col-span-2">
             <BidsVsAwardsChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />
             {/*<ActivityChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />*/}
