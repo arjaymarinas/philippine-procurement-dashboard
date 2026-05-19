@@ -94,3 +94,28 @@ SELECT COUNT(*) AS platinum_merchants
 FROM merchants
 WHERE "Membership Type" = 'Platinum';
 """
+
+GET_TOP_10_MERCHANTS_BY_CA = """
+SELECT 
+    "AwardeeOrganizationName",
+    COUNT(DISTINCT "AwardNo") AS "Awards Posted",
+    ROUND(
+        SUM(
+            CASE 
+                WHEN "ContractAmount" IS NULL 
+                    THEN "ABC"
+                ELSE "ContractAmount"
+            END
+        )::numeric,
+        2
+    ) AS "Total Contract"
+FROM public."bids"
+WHERE 
+    "AwardNo" IS NOT NULL
+    AND "PublishedDate" IS NOT NULL
+    AND "NoticeStatus" = 'Awarded'
+    AND "AwardeeOrganizationName" IS NOT NULL
+GROUP BY "AwardeeOrganizationName"
+ORDER BY "Total Contract" DESC
+LIMIT 10;
+"""

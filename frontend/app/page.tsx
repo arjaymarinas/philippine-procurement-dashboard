@@ -10,6 +10,7 @@ import { RecentActivities } from "@/components/dashboard/recent-activities"
 import { VendorPerformance } from "@/components/dashboard/vendor-performance"
 import { ProcurementPieChart } from "@/components/dashboard/pie-chart"
 import { BudgetVsActualChart } from "@/components/dashboard/budget-actual-chart"
+import { BidsVsAwardsChart } from "@/components/charts/bids-vs-award-chart"
 import {
   FileText,
   DollarSign,
@@ -112,7 +113,8 @@ export default function ProcurementDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           <ProcurementPieChart bids_abc_by_classification={stats?.bids_abc_by_classification} />
           <div className="lg:col-span-2">
-            <ActivityChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />
+            <BidsVsAwardsChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />
+            {/*<ActivityChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />*/}
           </div>
         </div>
 
@@ -130,17 +132,22 @@ export default function ProcurementDashboard() {
         </div>
         */}
 
-        {/* Bottom Row */}
+        {/* Bottom Row 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <CategoryBreakdown />
           <div className="lg:col-span-2">
             <RecentActivities />
           </div>
-        </div>
+        </div>*/}
 
         {/* Vendor Performance */}
         <div className="mt-6">
-          <VendorPerformance />
+          <VendorPerformance top_10_merchants_by_ca={stats?.top_10_merchants_by_ca} />
+        </div>
+
+        {/* Bar Chart */}
+        <div className="mt-6">
+          <BidsVsAwardsChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />
         </div>
       </main>
     </div>

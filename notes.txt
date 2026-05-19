@@ -1,4 +1,6 @@
 # run this in CMD to start backend service
+cd backend
+source venv/Scripts/activate
 uvicorn app.main:app --reload
 
 # run this command to start frontend service

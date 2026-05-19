@@ -46,11 +46,11 @@ export function BudgetVsActualChart({ bids_abc_per_month, awards_ca_per_month }:
           <div className="flex items-center gap-4 mt-2">
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-primary" />
-              <span className="text-sm text-muted-foreground">Contract Amount</span>
+              <span className="text-sm text-muted-foreground">Approved Budget</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-accent" />
-              <span className="text-sm text-muted-foreground">Approved Budget</span>
+              <span className="text-sm text-muted-foreground">Contract Amount</span>
             </div>
           </div>
         </div>

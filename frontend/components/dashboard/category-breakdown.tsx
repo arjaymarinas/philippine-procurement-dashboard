@@ -4,8 +4,8 @@ import { Card } from "@/components/ui/card"
 import { ChevronRight } from "lucide-react"
 
 const categories = [
-  { name: "IT Services", value: 32, amount: "$15.2M", change: 12 },
-  { name: "Construction", value: 24, amount: "$11.4M", change: 8 },
+  { name: "IT Services", value: 20, amount: "$15.2M", change: 12 },
+  { name: "Construction", value: 12, amount: "$11.4M", change: 8 },
   { name: "Professional Services", value: 18, amount: "$8.5M", change: -3 },
   { name: "Equipment", value: 14, amount: "$6.6M", change: 15 },
   { name: "Supplies", value: 12, amount: "$5.7M", change: 5 },
@@ -34,9 +34,8 @@ export function CategoryBreakdown() {
               <div className="flex items-center gap-3">
                 <span className="text-muted-foreground">{category.amount}</span>
                 <span
-                  className={`text-xs font-medium ${
-                    category.change > 0 ? "text-accent" : "text-destructive"
-                  }`}
+                  className={`text-xs font-medium ${category.change > 0 ? "text-accent" : "text-destructive"
+                    }`}
                 >
                   {category.change > 0 ? "+" : ""}{category.change}%
                 </span>
