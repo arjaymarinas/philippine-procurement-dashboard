@@ -6,6 +6,8 @@ def get_merchant_stats(year: str = None):
     cursor = conn.cursor()
 
     try:
+      start_date = f"{year}-01-01"
+      end_date = f"{year}-12-31"
 
       #cursor.execute(GET_TOTAL_ACTIVE_MERCHANT)
       #total_active_merchant = cursor.fetchone()
@@ -13,7 +15,7 @@ def get_merchant_stats(year: str = None):
       #cursor.execute(GET_TOTAL_PLATINUM_MERCHANT)
       #total_platinum_merchant = cursor.fetchone()
 
-      cursor.execute(GET_MERCHANT_REGISTRATION, (year, year))
+      cursor.execute(GET_MERCHANT_REGISTRATION, (start_date, end_date, start_date, end_date))
       merchant_registration = cursor.fetchone()
 
       result = {
@@ -34,8 +36,11 @@ def get_top_10_merchants_by_ca(year: str = "2025"):
     conn = get_connection()
     cursor = conn.cursor()
 
+    start_date = f"{year}-01-01"
+    end_date = f"{year}-12-31"
+
     try:
-      cursor.execute(GET_TOP_10_MERCHANTS_BY_CA, (year,))
+      cursor.execute(GET_TOP_10_MERCHANTS_BY_CA, (start_date, end_date))
       result = cursor.fetchall()
       return result
     finally:

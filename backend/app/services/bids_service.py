@@ -11,12 +11,15 @@ def get_bid_stats(year: str = "2025"):
     conn = get_connection()
     cursor = conn.cursor()
 
+    start_date = f"{year}-01-01"
+    end_date = f"{year}-12-31"
+
     try:
 
-      cursor.execute(GET_TOTAL_BIDS_ABC, (year,))
+      cursor.execute(GET_TOTAL_BIDS_ABC, (start_date, end_date))
       bid_posted = cursor.fetchone()
 
-      cursor.execute(GET_TOTAL_AWARD_CA, (year,))
+      cursor.execute(GET_TOTAL_AWARD_CA, (start_date, end_date))
       award_posted = cursor.fetchone()
 
       result = {
@@ -40,8 +43,11 @@ def get_bids_abc_per_month(year: str = "2025"):
   conn = get_connection()
   cursor = conn.cursor()
 
+  start_date = f"{year}-01-01"
+  end_date = f"{year}-12-31"
+
   try:
-    cursor.execute(GET_BIDS_ABC_PER_MONTH, (year,))
+    cursor.execute(GET_BIDS_ABC_PER_MONTH, (start_date, end_date))
     result = cursor.fetchall()
     return result
   finally:
@@ -52,8 +58,11 @@ def get_bids_abc_by_classification(year: str = "2025"):
   conn = get_connection()
   cursor = conn.cursor()
 
+  start_date = f"{year}-01-01"
+  end_date = f"{year}-12-31"
+
   try:
-    cursor.execute(GET_BIDS_ABC_BY_CLASSIFICATION, (year,))
+    cursor.execute(GET_BIDS_ABC_BY_CLASSIFICATION, (start_date, end_date))
     result = cursor.fetchall()
     return result
   finally:
@@ -64,8 +73,11 @@ def get_awards_ca_per_month(year: str = "2025"):
   conn = get_connection()
   cursor = conn.cursor()
 
+  start_date = f"{year}-01-01"
+  end_date = f"{year}-12-31"
+
   try:
-    cursor.execute(GET_AWARDS_CA_PER_MONTH, (year,))
+    cursor.execute(GET_AWARDS_CA_PER_MONTH, (start_date, end_date))
     result = cursor.fetchall()
     return result
   finally:
