@@ -5,17 +5,19 @@ from app.services.bids_service import (
     get_bids_abc_by_classification
 )
 from app.services.merchant_service import get_merchant_stats, get_top_10_merchants_by_ca
+from app.services.agency_service import get_agency_stats
 
 router = APIRouter()
 
 @router.get("")
-def fetch_stats():
-    bid_stats = get_bid_stats()
-    bids_abc_per_month = get_bids_abc_per_month()
-    awards_ca_per_month = get_awards_ca_per_month()
-    bids_abc_by_classification = get_bids_abc_by_classification()
-    merchant_stats = get_merchant_stats()
-    top_10_merchants_by_ca = get_top_10_merchants_by_ca()
+def fetch_stats(year: str = None):
+    bid_stats = get_bid_stats(year)
+    bids_abc_per_month = get_bids_abc_per_month(year)
+    awards_ca_per_month = get_awards_ca_per_month(year)
+    bids_abc_by_classification = get_bids_abc_by_classification(year)
+    merchant_stats = get_merchant_stats(year)
+    top_10_merchants_by_ca = get_top_10_merchants_by_ca(year)
+    agency_stats = get_agency_stats(year)
 
     return {
         **bid_stats,
@@ -23,5 +25,6 @@ def fetch_stats():
         "bids_abc_per_month": bids_abc_per_month,
         "awards_ca_per_month": awards_ca_per_month,
         "bids_abc_by_classification": bids_abc_by_classification,
-        "top_10_merchants_by_ca": top_10_merchants_by_ca
+        "top_10_merchants_by_ca": top_10_merchants_by_ca,
+        "agency_stats": agency_stats
     }

@@ -28,9 +28,9 @@ const currencyFormatter = new Intl.NumberFormat("en", {
 });
 
 export function RedPlatinumChart({ merchants }: { merchants: MerchantsStats }) {
-    const totalActive = merchants?.total_active_merchant ?? 0;
-    const platinum = merchants?.total_platinum_merchant ?? 0;
-    const red = Math.max(0, totalActive - platinum);
+    const totalRegistration = merchants?.total_registration ?? 0;
+    const platinum = merchants?.total_platinum ?? 0;
+    const red = Math.max(0, totalRegistration - platinum);
 
     const red_platinum_data: RedPlatinumDataPoint[] = [
         { name: "Red Members", value: red },
@@ -74,9 +74,7 @@ export function RedPlatinumChart({ merchants }: { merchants: MerchantsStats }) {
                             data={red_platinum_data}
                             cx="50%"
                             cy="50%"
-                            innerRadius={65}
-                            outerRadius={100}
-                            paddingAngle={3}
+
                             dataKey="value"
                             nameKey="name"
                         >
@@ -95,7 +93,7 @@ export function RedPlatinumChart({ merchants }: { merchants: MerchantsStats }) {
                             itemStyle={{
                                 color: "oklch(0.95 0 0)"
                             }}
-                            formatter={(value: number) => [currencyFormatter.format(value), "Merchants"]}
+                            formatter={(value: number, name: string) => [currencyFormatter.format(value), name]}
                         />
                         <Legend
                             verticalAlign="bottom"

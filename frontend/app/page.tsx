@@ -12,6 +12,7 @@ import { ProcurementPieChart } from "@/components/dashboard/pie-chart"
 import { BudgetVsActualChart } from "@/components/dashboard/budget-actual-chart"
 import { BidsVsAwardsChart } from "@/components/charts/bids-vs-award-chart"
 import { RedPlatinumChart } from "@/components/charts/red-platinum-chart"
+import { DashboardProvider, useDashboard } from "@/hooks/use-dashboard-stats"
 
 import {
   FileText,
@@ -22,7 +23,8 @@ import {
   Award,
 } from "lucide-react"
 
-export default function ProcurementDashboard() {
+function DashboardContent() {
+  const { selectedYear } = useDashboard()
 
   const currencyFormatter = new Intl.NumberFormat("en", {
     notation: "compact",
@@ -35,11 +37,15 @@ export default function ProcurementDashboard() {
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
 
-    fetch(`${apiUrl}/dashboard`)
+    fetch(`${apiUrl}/dashboard?year=${selectedYear}`)
       .then((res) => res.json())
-      .then((data) => setStats(data))
-      .catch((err) => console.error(err))
-  }, [])
+      .then((data) => {
+        setStats(data)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [selectedYear])
 
   return (
     <div className="min-h-screen bg-background">
@@ -79,33 +85,16 @@ export default function ProcurementDashboard() {
             icon={<DollarSign className="h-4 w-4" />}
           />
           <StatCard
-            title="Active Merchants"
-            value={currencyFormatter.format(stats?.merchants?.total_active_merchant ?? 0)}
+            title="Merchants Registration"
+            value={currencyFormatter.format(stats?.merchant_stats?.total_registration ?? 0)}
             change={8.3}
             changeLabel="vs last year"
             icon={<Users className="h-4 w-4" />}
           />
-          {/* <StatCard
-            title="Avg Bid Value"
-            value="57.5"
-            prefix="₱"
-            suffix="K"
-            change={6.1}
-            changeLabel="vs last year"
-            icon={<TrendingUp className="h-4 w-4" />}
-          /> 
           <StatCard
-            title="Avg Cycle Time"
-            value="18.5"
-            suffix=" days"
-            change={-12.4}
-            changeLabel="vs last year"
-            icon={<Clock className="h-4 w-4" />}
-          />*/}
-          <StatCard
-            title="Platinum Merchants"
-            value={currencyFormatter.format(stats?.merchants?.total_platinum_merchant ?? 0)}
-            change={200}
+            title="Agency Registrations"
+            value={currencyFormatter.format(stats?.agency_stats?.total_agencies ?? 0)}
+            change={8.3}
             changeLabel="vs last year"
             icon={<Award className="h-4 w-4" />}
           />
@@ -113,35 +102,18 @@ export default function ProcurementDashboard() {
 
         {/* Pie Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/*<ProcurementPieChart bids_abc_by_classification={stats?.bids_abc_by_classification} />*/}
-          <RedPlatinumChart merchants={stats?.merchants} />
+          <RedPlatinumChart merchants={stats?.merchant_stats} />
           <div className="lg:col-span-2">
             <BidsVsAwardsChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />
-            {/*<ActivityChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />*/}
           </div>
         </div>
 
-        {/* Pie Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           <ProcurementPieChart bids_abc_by_classification={stats?.bids_abc_by_classification} />
           <div className="lg:col-span-2">
             <BudgetVsActualChart bids_abc_per_month={stats?.bids_abc_per_month} awards_ca_per_month={stats?.awards_ca_per_month} />
           </div>
         </div>
-
-        {/* Charts Row 
-        <div className="mb-8">
-          <ContractValueChart />
-        </div>
-        */}
-
-        {/* Bottom Row 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <CategoryBreakdown />
-          <div className="lg:col-span-2">
-            <RecentActivities />
-          </div>
-        </div>*/}
 
         {/* Vendor Performance */}
         <div className="mt-6">
@@ -154,5 +126,13 @@ export default function ProcurementDashboard() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function ProcurementDashboard() {
+  return (
+    <DashboardProvider>
+      <DashboardContent />
+    </DashboardProvider>
   )
 }

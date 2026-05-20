@@ -4,6 +4,7 @@
 #ORDER BY "Name" ASC;    
 #"""
 
+# BIDS RELATED QUERIES
 GET_TOTAL_BIDS_ABC = """
 WITH bids_clean AS (
     SELECT
@@ -11,6 +12,7 @@ WITH bids_clean AS (
         MAX("ABC") AS ABC
     FROM public."bids"
     WHERE "PublishedDate" IS NOT NULL
+    AND TO_CHAR("PublishedDate"::date, 'YYYY') = %s
     GROUP BY "BidReferenceNo"
 )
 SELECT
@@ -28,6 +30,7 @@ WITH bids_clean AS (
         MAX("ABC") AS ABC
     FROM public."bids"
     WHERE "PublishedDate" IS NOT NULL
+    AND TO_CHAR("PublishedDate"::date, 'YYYY') = %s
     GROUP BY
         DATE_TRUNC('month', "PublishedDate"::date),
         TO_CHAR("PublishedDate"::date, 'Mon'),
@@ -50,6 +53,7 @@ WITH bids_clean AS (
         MAX("ABC") AS ABC
     FROM public."bids"
     WHERE "PublishedDate" IS NOT NULL
+    AND TO_CHAR("PublishedDate"::date, 'YYYY') = %s
     GROUP BY "BidReferenceNo", "Classification"
 )
 SELECT
@@ -67,7 +71,8 @@ SELECT
     SUM("ContractAmount") "Total Contract"
 FROM public."bids" 
 WHERE "AwardNo" IS NOT NULL AND "PublishedDate" IS NOT NULL 
-AND "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted');
+AND "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted')
+AND TO_CHAR("PublishedDate"::date, 'YYYY') = %s;
 """
 
 GET_AWARDS_CA_PER_MONTH = """
@@ -78,12 +83,14 @@ SELECT
 FROM bids
 WHERE "AwardNo" IS NOT NULL AND "PublishedDate" IS NOT NULL 
 AND "NoticeStatus" IN ('Awarded', 'Closed', 'Shortlisted')
+AND TO_CHAR("PublishedDate"::date, 'YYYY') = %s
 GROUP BY DATE_TRUNC('month', "PublishedDate"::date),
          TO_CHAR("PublishedDate"::date, 'Mon')
 ORDER BY DATE_TRUNC('month', "PublishedDate"::date);
 
 """
 
+# MERCHANTS RELATED QUERIES
 GET_TOTAL_ACTIVE_MERCHANT = """
 SELECT COUNT(*) AS total_merchants
 FROM merchants;
@@ -93,6 +100,22 @@ GET_TOTAL_PLATINUM_MERCHANT = """
 SELECT COUNT(*) AS platinum_merchants
 FROM merchants
 WHERE "Membership Type" = 'Platinum';
+"""
+
+GET_MERCHANT_REGISTRATION = """
+SELECT 
+    COUNT(DISTINCT "OrganizationName") AS total_registration,
+    COUNT(
+        CASE 
+            WHEN
+                EXTRACT(YEAR FROM "IssuanceDate"::date) = %s
+            THEN 1
+        END
+    ) AS total_platinum
+FROM merchants
+WHERE "RedApprovalDate" IS NOT NULL
+    AND "RedApprovalDate" != '0000-00-00 00:00:00'
+    AND EXTRACT(YEAR FROM "RedApprovalDate"::date) = %s;;
 """
 
 GET_TOP_10_MERCHANTS_BY_CA = """
@@ -115,7 +138,15 @@ WHERE
     AND "PublishedDate" IS NOT NULL
     AND "NoticeStatus" = 'Awarded'
     AND "AwardeeOrganizationName" IS NOT NULL
+    AND TO_CHAR("PublishedDate"::date, 'YYYY') = %s
 GROUP BY "AwardeeOrganizationName"
 ORDER BY "Total Contract" DESC
 LIMIT 10;
+"""
+
+# AGENCIES RELATED QUERIES
+GET_TOTAL_AGENCIES = """
+SELECT COUNT(*) AS total_agencies
+FROM agencies
+WHERE TO_CHAR("RegistrationDate"::date, 'YYYY') = %s;
 """

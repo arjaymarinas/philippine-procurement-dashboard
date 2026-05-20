@@ -10,9 +10,12 @@ import {
 } from "@/components/ui/select"
 import { Calendar, Download, Bell, Settings, LayoutGrid } from "lucide-react"
 import { Navigation } from "./navigation"
+import { useDashboard } from "@/hooks/use-dashboard-stats"
 import Link from "next/link"
 
 export function DashboardHeader() {
+  const { selectedYear, setSelectedYear } = useDashboard()
+
   return (
     <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
@@ -27,7 +30,7 @@ export function DashboardHeader() {
             </div>
           </Link>
           <div className="flex items-center gap-2 sm:gap-3">
-            <Select defaultValue="2025">
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
               <SelectTrigger className="w-[130px] bg-secondary border-border">
                 <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
                 <SelectValue placeholder="Year" />
