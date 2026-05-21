@@ -26,5 +26,5 @@ def fetch_stats(year: str = None):
         "awards_ca_per_month": awards_ca_per_month,
         "bids_abc_by_classification": bids_abc_by_classification,
         "top_10_merchants_by_ca": top_10_merchants_by_ca,
-        "agency_stats": agency_stats
+        "agency_stats": agency_stats,
     }
